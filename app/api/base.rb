@@ -3,28 +3,34 @@ class API::Base < Grape::API
   format :json
   prefix :api
 
-  class Error < StandardError; end
-
   helpers do
     def storage
       @storage ||= Cocaine::Service.new :storage
     end
-    
+
     def node
       @node ||= Cocaine::Service.new :node
     end
-    
-    def stage(data = nil)
-      tx, rx = yield
-      tx.write data if data
+
+    def remote(service = nil, data = nil, &block)
+      return unless block
+
+      tx, rx = if service
+                 service.instance_exec params, &block
+               else
+                 block.call(params) if block
+               end
+      tx.write data if data && tx
+
+      return unless rx
       id, value = rx.recv
       error! value.last, 400 if id.to_s == 'error'
       value[0]
     end
   end
   
-  mount API::Apps
-  mount API::Profiles
-  mount API::Runlists
+  mount API::App
+  mount API::Profile
+  mount API::Runlist
   
 end
