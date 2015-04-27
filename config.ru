@@ -1,4 +1,4 @@
 require './init'
 
 use Rack::Session::Cookie
-run Rack::Cascade.new [API, Web]
+run Rack::Cascade.new [API::Base, Web]
