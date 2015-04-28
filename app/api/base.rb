@@ -6,10 +6,14 @@ class API::Base < Grape::API
   helpers do
     def storage
       @storage ||= Cocaine::Service.new :storage
+    rescue Cocaine::ServiceError
+      error! 'storage service is not available', 404
     end
 
     def node
       @node ||= Cocaine::Service.new :node
+    rescue Cocaine::ServiceError
+      error! 'node service is not available', 404
     end
 
     def remote(service = nil, data = nil, &block)

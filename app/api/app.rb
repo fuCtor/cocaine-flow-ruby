@@ -4,26 +4,29 @@ class API::App < Grape::API
   helpers do
     def current_app
       @current_app ||= Cocaine::Service.new params[:name] if params[:name]
+    rescue Cocaine::ServiceError
+      error! 'service is not available', 404
     end
   end
 
   resources :apps do
-    get '/' do
+    get do
       remote(storage) { find :manifests, [:app] }
     end
 
-    post '/' do
+    post do
     end
 
-    namespace '/:name' do
-      get '/' do
+    namespace ':name' do
+
+      get do
         remote(current_app) { info }
       end
 
-      delete '/:name' do
+      delete ':name' do
       end
 
-      post '/:action' do
+      post ':action' do
         params[:profile] ||= 'default'
 
         case params[:action]
@@ -36,9 +39,9 @@ class API::App < Grape::API
             remote(node) { |p| start_app p[:name], p[:profile] }
           else
             request.body.rewind
-            data = MultiJson.load(request.body.read)
+            content = MultiJson.load(request.body.read)
 
-            result = remote(current_app, MessagePack.pack(data)) { |p| enqueue p[:action] }
+            result = remote(current_app, MessagePack.pack(content)) { |p| enqueue p[:action] }
             MessagePack.unpack(result)
         end
       end
