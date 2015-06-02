@@ -6,6 +6,7 @@ gem 'grape'
 
 gem 'multi_json'
 gem 'oj'
+gem 'rufus-scheduler'
 
 gem 'cocaine-framework', git: 'https://github.com/cocaine/cocaine-framework-ruby.git', require: 'cocaine'
 
@@ -16,6 +17,7 @@ gem 'haml'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-angular'
+  gem 'rails-assets-angular-route'
   gem 'rails-assets-bourbon'
   gem 'rails-assets-neat'
   gem 'rails-assets-bitters'

@@ -3,7 +3,7 @@ class API::App < Grape::API
 
   helpers do
     def current_app
-      @current_app ||= Cocaine::Service.new params[:name] if params[:name]
+      @current_app ||= App.service params[:name] if params[:name]
     rescue Cocaine::ServiceError
       error! 'service is not available', 404
     end
@@ -30,12 +30,14 @@ class API::App < Grape::API
         params[:profile] ||= 'default'
 
         case params[:action]
-          when :start
+          when 'start'
             remote(node) { |p| start_app p[:name], p[:profile] }
-          when :stop
+          when 'stop'
             remote(node) { |p| pause_app p[:name] }
-          when :restart
+            App.remove_service params[:name]
+          when 'restart'
             remote(node) { |p| pause_app p[:name] }
+            App.remove_service params[:name]
             remote(node) { |p| start_app p[:name], p[:profile] }
           else
             request.body.rewind

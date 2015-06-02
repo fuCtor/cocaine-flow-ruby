@@ -1,0 +1,99 @@
+.app-item {
+  @include row(table);
+  padding: 10px;
+  .app-name {
+    @include span-columns(9);
+  }
+
+  .app-control {
+    @include span-columns(3);
+    text-align: right;
+    #{$all-buttons} {
+      font-size: 10px;
+    }
+  }
+}
+
+.stat-row
+{
+  @include row(table);
+}
+
+#app-info {
+  padding-top: 20px;
+
+  h1 {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.3em;
+    color: dodgerblue;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.3em;
+    span {
+      font-size: 0.6em;
+    }
+  }
+
+
+
+  h4 {
+    font-weight: 600;
+    color: dodgerblue;
+    margin-top: 10px;
+  }
+}
+
+.stats {
+  $base-spacing: 1.5em !default;
+  $dark-gray: #333 !default;
+  $base-font-color: $dark-gray !default;
+  $action-color: #477dca !default;
+  $stats-color: lighten($action-color, 10%);
+
+  padding: $base-spacing / 2;
+
+  ul {
+    padding: 0;
+  }
+
+  li {
+    border-right: 1px solid transparentize($base-font-color, 0.8);
+    color: $stats-color;
+    display: inline;
+    float: left;
+    font-size: 1.2em;
+    font-weight: 800;
+    line-height: 1.1em;
+    padding: 0 0.7em;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+
+  span {
+    color: $base-font-color;
+    display: block;
+    font-size: 0.7em;
+    font-weight: normal;
+  }
+}
+
+
+button[ng-class='true'] {
+  &.start-btn {
+    background-color: green;
+  }
+  &.stop-btn {
+    background-color: orangered;
+  }
+}
+

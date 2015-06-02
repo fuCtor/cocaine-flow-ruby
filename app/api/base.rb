@@ -5,13 +5,13 @@ class API::Base < Grape::API
 
   helpers do
     def storage
-      @storage ||= Cocaine::Service.new :storage
+      @storage ||= App.service :storage
     rescue Cocaine::ServiceError
       error! 'storage service is not available', 404
     end
 
     def node
-      @node ||= Cocaine::Service.new :node
+      @node ||= App.service :node
     rescue Cocaine::ServiceError
       error! 'node service is not available', 404
     end

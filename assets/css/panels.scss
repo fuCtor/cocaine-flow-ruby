@@ -1,0 +1,36 @@
+$border-color: #929292;
+
+.page-header {
+  @include span-columns(12);
+  h1 {
+    font-size: 30px;
+    line-height: 30px;
+    margin: 20px;
+  }
+  border-bottom: 1px solid $border-color;
+}
+
+.page {
+  position: absolute;
+  bottom: 0px;
+  top: 70px;
+  right: 0px;
+  left: 0px;
+}
+
+#dashboard-panel {
+  @include fill-parent();
+  height: 150px;
+  border-bottom: 1px solid $border-color;
+}
+
+#apps-list {
+  @include span-columns(9);
+  border-right: 1px solid $border-color;
+  bottom: 0px;
+}
+
+#app-info {
+  @include span-columns(3);
+}
+

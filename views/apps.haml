@@ -1,0 +1,59 @@
+#dashboard-panel
+  Dashboard
+
+#apps-list
+  %ul
+    %li( ng-repeat='app in apps' )
+      .app-item(id= "{{app.name}}-app" ng-click="showDetail(app)")
+        .app-name
+          %span {{app.name}}
+        .app-control
+          %button.start-btn(ng-click='start(app);' ng-class="{{ app.status.state == 'running' ? 'true' : 'false' }}")
+            %i.fa.fa-play
+          %button.stop-btn(ng-click='stop(app);' ng-class="{{ app.status.state == 'stopped' ? 'true' : 'false' }}")
+            %i.fa.fa-stop
+          %button.restart-btn(ng-click='restart(app);')
+            %i.fa.fa-refresh
+
+#app-info(ng-if='current_app')
+  %h1 {{ current_app.name }}
+  %h2
+    {{ current_app.status.state }}
+    %span {{ current_app.status.profile }}
+  %div(ng-if='current_app.status.state =="running"')
+
+    .stat-row
+      %h4.stat-header General
+      .stats
+        %ul
+          %li
+            {{ current_app.status.sessions.pending }}
+            %span Sessions
+
+    .stat-row
+      %h4.stat-header Queue
+      .stats
+        %ul
+          %li
+            {{ current_app.status.queue.depth }}
+            %span Depth
+          %li
+            {{ current_app.status.queue.capacity }}
+            %span Capacity
+
+    .stat-row
+      %h4.stat-header Slaves
+      .stats
+        %ul
+          %li
+            {{ current_app.status.slaves.active }}
+            %span Active
+          %li
+            {{ current_app.status.slaves.capacity }}
+            %span Capacity
+          %li
+            {{ current_app.status.slaves.idle }}
+            %span Idle
+
+
+

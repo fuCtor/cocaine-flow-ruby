@@ -15,7 +15,6 @@ class Web < Sinatra::Base
     # Actual Rails Assets integration, everything else is Sprockets
     if defined?(RailsAssets)
       RailsAssets.load_paths.each do |path|
-        puts path
         settings.sprockets.append_path(path)
       end
     end
@@ -34,8 +33,12 @@ class Web < Sinatra::Base
     end
   end
 
+  get "/__tpl/:name" do
+    puts params
+    haml params[:name].to_sym
+  end
+
   get '/' do
     haml :index
   end
 end
-

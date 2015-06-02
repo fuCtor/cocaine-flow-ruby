@@ -5,6 +5,10 @@ require 'bundler/setup'
 
 Bundler.require
 
+require 'rufus/scheduler'
+
+SCHEDULER = Rufus::Scheduler.new
+
 APP_ROOT = File.expand_path('..', __FILE__)
 
 Dir[File.join(APP_ROOT, 'app', '*.rb')].each { |file| require file }
